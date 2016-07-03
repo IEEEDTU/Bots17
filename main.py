@@ -56,7 +56,7 @@ def check_winning(color):
 
 def check_connected(x,y,xpar,ypar,col):		
 	retval = False
-	print x, y
+	
 	if(y==0):
 		return True
 
