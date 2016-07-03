@@ -7,7 +7,7 @@ board = [['U' for i in range(0, 11)] for j in range(0, 11)]
 
 # This function checks whether a new piece can be placed or not.
 def is_valid_move( x, y ):
-	if(x>0 and y>0 and x<11 and y<11 and board[x][y]=='U'):
+	if(x>=0 and y>=0 and x<11 and y<11 and board[x][y]=='U'):
 		return True
 	else:
 		return False
