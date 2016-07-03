@@ -54,10 +54,10 @@ def check_winning(color):
 				return check_connected(10,i,10,i,2)
 		return False
 
-def check_connected(x,y,xpar,ypar,col):
+def check_connected(x,y,xpar,ypar,col):		
 	retval = False
 	print x, y
-	if(y==1):
+	if(y==0):
 		return True
 
 	if(x-1>=0 and x-1<11 and retval==False and x-1!=xpar):
