@@ -10,10 +10,6 @@ ds.initialize()
 # Board (11 * 11 matrix) initialized with 'U'
 board = [['U' for j in range(11)] for i in range(11)]
 
-# BoardHelp for Disjoint Set Matrix
-# 0 for 'U', 1 for 'R', 2 for 'B'
-boardHelp = [[0 for i in range(0, 11)] for j in range(0, 11)]
-
 
 # This function checks whether a new piece can be placed or not.
 def is_valid_move(r, c):
@@ -46,14 +42,14 @@ def get_connected_components(x, y):
 
 # This functions first checks for validity of new move and then
 # update Board with new move.
-<<<<<<< HEAD
 def move(r, c, color):
     global board
     if is_valid_move(r, c):
         board[r][c] = color
         conn_comps = get_connected_components(r, c)
-        print color, conn_comps
+        print color, conn_comps # For checking board status after each move
         spc = 0
+        # For checking board status after each move
         for i in board:
             print spc*' ',
             for j in i:
@@ -65,35 +61,9 @@ def move(r, c, color):
             x, y = cell
             id1 = ds.calc_id(x, y)
             ds.merge(id0, id1)
-=======
-def move(x, y, color):
-    if is_valid_move(x, y):
-        global board, boardHelp
-        board[x][y] = color
-        if color == 'R':
-            boardHelp[x][y] = 1
-        else:
-            boardHelp[x][y] = 2
-
-        if check_winning(color):
-            print(color + " wins!")
-
->>>>>>> origin/master
-        return True
-    else:
-        return False
-
 
 # This function checks if any player is winning or not.
 # TODO: check_winning()
-def check_winning(color):
-    if color == 'R':
-        for i in range(0, 11):
-            if boardHelp[i][10] == 1:
-                return check_connected(i, 10, i, 10, 1)
-        return False
-
-<<<<<<< HEAD
 def check_winning():
     if ds.find_set(1, 117):
         return 'B'
@@ -136,59 +106,3 @@ move(3, 9, 'B')
 move(5, 9, 'R')
 move(2, 9, 'B')
 move(5, 10, 'R')
-=======
-    else:
-        for i in range(0, 11):
-            if boardHelp[10][i] == 2:
-                return check_connected(10, i, 10, i, 2)
-        return False
-
-
-def check_connected(x, y, xpar, ypar, col):
-    retval = False
-    if col == 1 and y == 0:
-        return True
-    if col == 2 and x == 0:
-        return True
-
-    if 0 <= x - 1 < 11 and retval is False and x - 1 != xpar:
-        if boardHelp[x - 1][y] == col:
-            retval = check_connected(x - 1, y, x, y, col)
-        else:
-            retval = False
-
-    if 0 <= x - 1 < 11 and 0 <= y + 1 < 11 and retval is False and (x - 1 != xpar or y + 1 != ypar):
-        if boardHelp[x - 1][y + 1] == col:
-            retval = check_connected(x - 1, y + 1, x, y, col)
-        else:
-            retval = False
-
-    if 0 <= x + 1 < 11 and retval is False and x + 1 != xpar:
-        if boardHelp[x + 1][y] == col:
-            retval = check_connected(x + 1, y, x, y, col)
-        else:
-            retval = False
-
-    if 0 <= x + 1 < 11 and 0 <= y - 1 < 11 and retval is False and (x + 1 != xpar or y - 1 != ypar):
-        if boardHelp[x + 1][y - 1] == col:
-            retval = check_connected(x + 1, y - 1, x, y, col)
-        else:
-            retval = False
-
-    if 0 <= y - 1 < 11 and retval == False and ypar != y - 1:
-        if boardHelp[x][y - 1] == col:
-            retval = check_connected(x, y - 1, x, y, col)
-        else:
-            retval = False
-
-    if 0 <= y + 1 < 11 and ypar != y + 1 and retval == False:
-        if boardHelp[x][y + 1] == col:
-            retval = check_connected(x, y + 1, x, y, col)
-        else:
-            retval = False
-
-    return retval
-
-# This function drives the program and plays the game.
-# TODO: main function()
->>>>>>> origin/master
