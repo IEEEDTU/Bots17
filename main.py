@@ -31,7 +31,7 @@ def move(x, y, color):
 			boardHelp[x][y] = 2
 			
 		if(check_winning(color)):
-			print color  + "wins!"
+			print((color) + "wins!")
 
 		return True
 
@@ -56,7 +56,6 @@ def check_winning(color):
 
 def check_connected(x,y,xpar,ypar,col):		
 	retval = False
-	
 	if(y==0):
 		return True
 
@@ -66,20 +65,13 @@ def check_connected(x,y,xpar,ypar,col):
 		else:
 			retval = False
 	
-	if(x-1>=0 and x-1<11 and y-1>=0 and y-1<11 and retval==False and (x-1!=xpar or y-1!=ypar)):
-		if(boardHelp[x-1][y-1]==col):
-			retval = check_connected(x-1,y-1,x,y,col)
-		else:
-			retval = False
-		
-	
 	if(x-1>=0 and x-1<11 and y+1>=0 and y+1<11 and retval==False and (x-1!=xpar or y+1!=ypar)):
 		if(boardHelp[x-1][y+1]==col):
 			retval = check_connected(x-1,y+1,x,y,col)
 		else:
 			retval = False
-		 
-
+		
+	
 	if(x+1>=0 and x+1<11 and retval==False and x+1!=xpar):
 		if(boardHelp[x+1][y]==col):
 			retval = check_connected(x+1,y,x,y,col)
@@ -93,13 +85,7 @@ def check_connected(x,y,xpar,ypar,col):
 		else:
 			retval = False
 		 
-	
-	if(x+1>=0 and x+1<11 and y+1>=0 and y+1<11 and retval==False and (x+1!=xpar or y+1!=ypar)):
-		if(boardHelp[x+1][y+1]==col):
-			retval = check_connected(x+1,y+1,x,y,col)	
-		else:
-			retval = False
-		 
+			 
 
 	if(y-1>=0 and y-1<11 and retval==False and ypar!=y-1):
 		if(boardHelp[x][y-1]==col):
@@ -119,4 +105,3 @@ def check_connected(x,y,xpar,ypar,col):
 
 # This function drives the program and plays the game.
 # TODO: main function()
-
