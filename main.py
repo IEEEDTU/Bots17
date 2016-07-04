@@ -31,7 +31,7 @@ def move(x, y, color):
 			boardHelp[x][y] = 2
 			
 		if(check_winning(color)):
-			print((color) + "wins!")
+			print((color) + " wins!")
 
 		return True
 
@@ -45,20 +45,24 @@ def check_winning(color):
 	if(color=='R'):
 		for i in range(0,11):
 			if(boardHelp[i][10]==1):
-				return check_connected(i,10,i,10,1)
+				for j in range(0,11):
+					if(boardHelp[j][0]==1):
+						return check_connected(i,10,i,10,1)
 		return False		
 
 	else:
 		for i in range(0,11):
 			if(boardHelp[10][i]==2):
-				return check_connected(10,i,10,i,2)
+				for j in range(0, 11):
+					if (boardHelp[0][j] == 2):
+						return check_connected(10,i,10,i,2)
 		return False
 
 def check_connected(x,y,xpar,ypar,col):		
 	retval = False
 	if(col==1 and y==0):
 		return True
-	if(col==2 and x==0)
+	if(col==2 and x==0):
 		return True
 
 	if(x-1>=0 and x-1<11 and retval==False and x-1!=xpar):
@@ -107,3 +111,4 @@ def check_connected(x,y,xpar,ypar,col):
 
 # This function drives the program and plays the game.
 # TODO: main function()
+
