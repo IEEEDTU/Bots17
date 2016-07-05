@@ -42,34 +42,61 @@ def move(x, y, color):
 
 		return True
 
-
 	else:
 		return False
 
 # This function checks if any player is winning or not.
 # TODO: check_winning()
+
 def check_winning(color):
+
 	retval = True
+	val = [0 for i in range(0,11)]		#Because various end row and/or column cells can be of required colour
+
 #Check if atleast one red cell in all columns
 	if(color=='R'):
 		for i in range(0,11):
+			if(boardHelp[i][10]==1):
+				if((i-1>=0 and boardHelp[i-1][10]==1) or (boardHelp[i][9]==1) or (i+1<11 and (boardHelp[i+1][9]==1 or boardHelp[i+1][10]==1))): #To reduce number of recursion calls
+					val[i] = 1
 			if(checkRed[i]==0):
 				retval = False
 				break
-		if(retval):
-			return check_connected(i,10,i,10,1)						
+		
+
+		returnValue = False
+		
+		if(retval==True):
+			for i in range(0,11):
+				if(val[i]==1):
+					returnValue = check_connected(val[i],10,val[i],10,1)						
+					if(returnValue==True):
+						break
+			return returnValue
 		return False		
+
 #Check if atleast one blue cell in all rows
 	else:
 		for i in range(0,11):
+			if(boardHelp[10][i]==2):
+				if((i-1>=0 and boardHelp[10][i-1]==2) or (boardHelp[9][i]==2) or (i+1<11 and (boardHelp[9][i+1]==2 or boardHelp[10][i+1]==2))): #To reduce number of recursion calls
+					val[i] = 1
 			if(checkBlue[i]==0):
 				retval = False
 				break;
-		if(retval):
-			return check_connected(10,i,10,i,2)
+		
+		returnValue = False
+		if(retval==True):
+			for i in range(0,11):
+				if(val[i]==1):
+					returnValue = check_connected(10,val[i],10,val[i],1)						
+					if(returnValue==True):
+						break
+			return returnValue
+		
 		return False
 
-def check_connected(x,y,xpar,ypar,col):		
+def check_connected(x,y,xpar,ypar,col):	
 	retval = False
 	if(col==1 and y==0):
 		return True
@@ -117,11 +144,9 @@ def check_connected(x,y,xpar,ypar,col):
 		else:
 			retval = False
 		 
-
 	return retval
 
 # This function drives the program and plays the game.
 # TODO: main function()
-
 
 
