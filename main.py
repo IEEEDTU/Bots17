@@ -1,5 +1,5 @@
 # Main.py -  main function of this project, all functions to be defined here.
-
+import time
 from disjointset import DisjointSet
 
 ds = DisjointSet()
@@ -46,7 +46,7 @@ cvals = [-1, -1, 1, 1, 0, 0]
 
 
 def check_in_range(x, y):
-    if x < 0 or x > 10 or y < 0 or y > 10:
+    if x < 0 or x > 12 or y < 0 or y > 12:
         return False
     return True
 
@@ -79,7 +79,7 @@ def move(r, c, color):
 # This function checks if any player is winning or not.
 # TODO: check_winning()
 def check_winning():
-    if ds.find_set(1, 157):
+    if ds.find_set(1, 156):
         return 'B'
     elif ds.find_set(13, 25):
         return 'R'
@@ -138,3 +138,11 @@ move(3, 9, 'B')
 move(5, 9, 'R')
 move(2, 9, 'B')
 move(5, 10, 'R')
+print_arr()
+print_root()
+print
+print_board()
+a=time.time()
+check_winning()
+b=time.time()
+print b-a
