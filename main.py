@@ -1,19 +1,41 @@
-"""
-Main file of the project. All functions are to be defined here.
-"""
+# Main.py -  main function of this project, all functions to be defined here.
 
 from disjointset import DisjointSet
 
 ds = DisjointSet()
 ds.initialize()
 
-# Board (11 * 11 matrix) initialized with 'U'
-board = [['U' for j in range(11)] for i in range(11)]
+# Board (13 * 13 matrix) initialized with 'U' --13x13 for virtual nodes
+board = [['U' for j in range(13)] for i in range(13)]
+
+
+# Function to fill in values for board
+def initialize_board():
+    for i in range(1, 12):
+        board[i][0] = 'R'
+        board[i][12] = 'R'
+    board[0][1:12] = ['B'] * 11
+    board[12][1:12] = ['B'] * 11
+    board[0][0] = board[0][12] = board[12][0] = board[12][12] = 'O'  # virtual corners not required
+
+
+initialize_board()
+
+
+# TODO: function to print current status of board       --remove it
+def print_board():
+    spc = 0
+    for i in board:
+        print spc * ' ',
+        for j in i:
+            print j,
+        spc += 1
+        print
 
 
 # This function checks whether a new piece can be placed or not.
 def is_valid_move(r, c):
-    if 0 <= r < 11 and 0 <= c < 11 and board[r][c] == 'U':
+    if 0 <= r < 11 and 0 <= c < 11 and board[r + 1][c + 1] == 'U':
         return True
     else:
         return False
@@ -40,41 +62,51 @@ def get_connected_components(x, y):
     return retval
 
 
-# This functions first checks for validity of new move and then
-# update Board with new move.
+# This functions first checks for validity of new move and then update Board with new move.
 def move(r, c, color):
     global board
     if is_valid_move(r, c):
+        r, c = r + 1, c + 1
         board[r][c] = color
         conn_comps = get_connected_components(r, c)
-        print color, conn_comps # For checking board status after each move
-        spc = 0
-        # For checking board status after each move
-        for i in board:
-            print spc*' ',
-            for j in i:
-                print j,
-            spc += 1
-            print
         id0 = ds.calc_id(r, c)
         for cell in conn_comps:
             x, y = cell
             id1 = ds.calc_id(x, y)
             ds.merge(id0, id1)
 
+
 # This function checks if any player is winning or not.
 # TODO: check_winning()
 def check_winning():
-    if ds.find_set(1, 117):
+    if ds.find_set(1, 157):
         return 'B'
     elif ds.find_set(13, 25):
         return 'R'
     return 'N'
 
 
+# function to print current status of ds.Arr
+def print_arr():
+    for i in range(13):
+        for j in range(13):
+            print (str(ds.Arr[i * 13 + j]).zfill(3) + ' ' + str(i).zfill(2) + ' ' + str(j).zfill(2) + ' ' + str(
+                board[i][j]) + '  '),
+        print
+
+
+def print_root():
+    c = 0
+    for i in range(169):
+        if c == 13:
+            c = 0
+            print
+        print str(ds.root(i)).zfill(3),
+        c += 1
+
+
 # This function drives the program and plays the game.
 # TODO: main function()
-
 move(5, 5, 'R')
 move(9, 1, 'B')
 move(6, 3, 'R')
