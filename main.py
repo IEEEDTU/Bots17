@@ -43,13 +43,17 @@ def check_winning(color):
     if color == 'R':
         for i in range(0, 11):
             if boardHelp[i][10] == 1:
-                return check_connected(i, 10, i, 10, 1)
+                for j in range(0, 11):
+                    if boardHelp[j][0] == 1:
+                        return check_connected(i, 10, i, 10, 1)
         return False
 
     else:
         for i in range(0, 11):
             if boardHelp[10][i] == 2:
-                return check_connected(10, i, 10, i, 2)
+                for j in range(0, 11):
+                    if boardHelp[0][j] == 2:
+                        return check_connected(10, i, 10, i, 2)
         return False
 
 
@@ -84,18 +88,17 @@ def check_connected(x, y, xpar, ypar, col):
         else:
             retval = False
 
-    if 0 <= y - 1 < 11 and retval == False and ypar != y - 1:
+    if 0 <= y - 1 < 11 and retval is False and ypar != y - 1:
         if boardHelp[x][y - 1] == col:
             retval = check_connected(x, y - 1, x, y, col)
         else:
             retval = False
 
-    if 0 <= y + 1 < 11 and ypar != y + 1 and retval == False:
+    if 0 <= y + 1 < 11 and ypar != y + 1 and retval is False:
         if boardHelp[x][y + 1] == col:
             retval = check_connected(x, y + 1, x, y, col)
         else:
             retval = False
-
     return retval
 
 # This function drives the program and plays the game.
