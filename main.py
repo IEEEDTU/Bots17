@@ -5,7 +5,7 @@ Main file of the project. All functions are to be defined here.
 # Board (11 * 11 matrix) initialized with 'U'
 board = [['U' for i in range(0, 11)] for j in range(0, 11)]
 
-#BoardHelp for Disjoint Set Matrix
+#boardHelp for Disjoint Set Matrix
 #0 for 'U', 1 for 'R', 2 for 'B'
 boardHelp = [[0 for i in range(0,11)] for j in range (0,11)]
 
@@ -42,21 +42,58 @@ def move(x, y, color):
 # This function checks if any player is winning or not.
 # TODO: check_winning()
 def check_winning(color):
+#Check if atleast one red cell in all columns
 	if(color=='R'):
-		for i in range(0,11):
-			if(boardHelp[i][10]==1):
-				for j in range(0,11):
-					if(boardHelp[j][0]==1):
-						return check_connected(i,10,i,10,1)
+		for a in range(0,11):
+			if(boardHelp[a][10]==1):
+				for b in range(0,11):
+					if(boardHelp[b][9]==1):
+						for c in range(0,11):
+							if(boardHelp[c][8]==1):
+								for d in range(0,11):
+									if(boardHelp[d][7]==1):
+										for e in range(0,11):
+											if(boardHelp[e][6]==1):
+												for f in range(0,11):
+													if(boardHelp[f][5]==1):
+														for g in range(0,11):
+															if(boardHelp[g][4]==1):
+																for h in range(0,11):
+																	if(boardHelp[h][3]==1):
+																		for i in range(0,11):
+																			if(boardHelp[i][2]==1):
+																				for j in range(0,11):
+																					if(boardHelp[j][1]==1):
+																						for k in range(0,11):
+																							if(boardHelp[k][0]==1):
+																								return check_connected(i,10,i,10,1)						
 		return False		
-
+#Check if atleast one blue cell in all rows
 	else:
-		for i in range(0,11):
-			if(boardHelp[10][i]==2):
-				for j in range(0, 11):
-					if (boardHelp[0][j] == 2):
-						return check_connected(10,i,10,i,2)
-		return False
+		for a in range(0,11):
+			if(boardHelp[10][a]==1):
+				for b in range(0,11):
+					if(boardHelp[9][b]==1):
+						for c in range(0,11):
+							if(boardHelp[8][c]==1):
+								for d in range(0,11):
+									if(boardHelp[7][d]==1):
+										for e in range(0,11):
+											if(boardHelp[6][e]==1):
+												for f in range(0,11):
+													if(boardHelp[5][f]==1):
+														for g in range(0,11):
+															if(boardHelp[4][g]==1):
+																for h in range(0,11):
+																	if(boardHelp[3][h]==1):
+																		for i in range(0,11):
+																			if(boardHelp[2][i]==1):
+																				for j in range(0,11):
+																					if(boardHelp[1][j]==1):
+																						for k in range(0,11):
+																							if(boardHelp[0][k]==1):
+																								return check_connected(10,i,10,i,2)
+			return False
 
 def check_connected(x,y,xpar,ypar,col):		
 	retval = False
@@ -111,4 +148,15 @@ def check_connected(x,y,xpar,ypar,col):
 
 # This function drives the program and plays the game.
 # TODO: main function()
+
+def main_func():
+	for i in range(11):
+		for j in range(11 - i - 1):
+			move(i, j, 'R')
+
+	for i in range(1, 11):
+		for j in range(i):
+			move(i, 11 - j - 1, 'B')
+
+	move(0, 10, 'R')
 
