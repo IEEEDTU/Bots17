@@ -149,14 +149,4 @@ def check_connected(x,y,xpar,ypar,col):
 # This function drives the program and plays the game.
 # TODO: main function()
 
-def main_func():
-	for i in range(11):
-		for j in range(11 - i - 1):
-			move(i, j, 'R')
-
-	for i in range(1, 11):
-		for j in range(i):
-			move(i, 11 - j - 1, 'B')
-
-	move(0, 10, 'R')
 
