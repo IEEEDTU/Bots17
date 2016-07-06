@@ -38,6 +38,8 @@ def move(x, y, color):
 			checkBlue[x] = 1
 			
 		if(check_winning(color)):
+			checkRed = [0 for i in range(0,11)]
+			checkBlue = [0 for i in range (0,11)]
 			print((color) + " wins!")
 
 		return True
@@ -51,25 +53,25 @@ def move(x, y, color):
 def check_winning(color):
 
 	retval = True
-	val = [0 for i in range(0,11)]		#Because various end row and/or column cells can be of required colour
+
 
 #Check if atleast one red cell in all columns
 	if(color=='R'):
+		val = [0 for i in range(0,11)]		#Because various end row and/or column cells can be of required colour
 		for i in range(0,11):
 			if(boardHelp[i][10]==1):
-				if((i-1>=0 and boardHelp[i-1][10]==1) or (boardHelp[i][9]==1) or (i+1<11 and (boardHelp[i+1][9]==1 or boardHelp[i+1][10]==1))): #To reduce number of recursion calls
+				if((i-1>=0 and boardHelp[i-1][10]==1) or (boardHelp[i][9]==1) or (i+1<11 and (boardHelp[i+1][9]==1 or boardHelp[i+1][10]==1))): #To reduce number of recursion callsglo
 					val[i] = 1
 			if(checkRed[i]==0):
 				retval = False
 				break
 		
-
 		returnValue = False
 		
 		if(retval==True):
 			for i in range(0,11):
 				if(val[i]==1):
-					returnValue = check_connected(val[i],10,val[i],10,1)						
+					returnValue = check_connected(i,10,i,10,1)
 					if(returnValue==True):
 						break
 			return returnValue
@@ -77,6 +79,7 @@ def check_winning(color):
 
 #Check if atleast one blue cell in all rows
 	else:
+		val = [0 for i in range(0,11)]		#Because various end row and/or column cells can be of required colour
 		for i in range(0,11):
 			if(boardHelp[10][i]==2):
 				if((i-1>=0 and boardHelp[10][i-1]==2) or (boardHelp[9][i]==2) or (i+1<11 and (boardHelp[9][i+1]==2 or boardHelp[10][i+1]==2))): #To reduce number of recursion calls
@@ -89,7 +92,7 @@ def check_winning(color):
 		if(retval==True):
 			for i in range(0,11):
 				if(val[i]==1):
-					returnValue = check_connected(10,val[i],10,val[i],1)						
+					returnValue = check_connected(10,i,10,i,2)						
 					if(returnValue==True):
 						break
 			return returnValue
@@ -149,4 +152,6 @@ def check_connected(x,y,xpar,ypar,col):
 # This function drives the program and plays the game.
 # TODO: main function()
 
+
+	 
 
