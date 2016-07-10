@@ -3,10 +3,9 @@
 # board[i][j]: 'U' -> Unoccupied or empty slot, 'R' -> Red stone, 'B' -> Blue stone.
 # The function should return x, y as coordinates to place his new move.
 
-
+import random
 def move(board):
-    import random
-    x, y = random.randrange(1, 11), random.randrange(1, 11)
-    while board[x][y] != 'U':
-        x, y = random.randrange(1, 11), random.randrange(1, 11)
-    return x, y
+    x,y = random.randint(0,10),random.randint(0,10)
+    while board[x][y] !='U':
+        x,y = random.randint(0,10),random.randint(0,10)
+    return x,y
