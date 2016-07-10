@@ -28,17 +28,12 @@ def move(x, y, color):
             boardHelp[x][y] = 1
         else:
             boardHelp[x][y] = 2
-
-        if check_winning(color):
-            print(color + " wins!")
-
         return True
     else:
         return False
 
 
 # This function checks if any player is winning or not.
-# TODO: check_winning()
 def check_winning(color):
     if color == 'R':
         for i in range(0, 11):
@@ -47,7 +42,6 @@ def check_winning(color):
                     if boardHelp[j][0] == 1:
                         return check_connected(i, 10, i, 10, 1)
         return False
-
     else:
         for i in range(0, 11):
             if boardHelp[10][i] == 2:
@@ -57,49 +51,53 @@ def check_winning(color):
         return False
 
 
-def check_connected(x, y, xpar, ypar, col):
-    retval = False
+def check_connected(x, y, x_parent, y_parent, col):
+    return_value = False
     if col == 1 and y == 0:
         return True
     if col == 2 and x == 0:
         return True
 
-    if 0 <= x - 1 < 11 and retval is False and x - 1 != xpar:
+    if 0 <= x - 1 < 11 and return_value is False and x - 1 != x_parent:
         if boardHelp[x - 1][y] == col:
-            retval = check_connected(x - 1, y, x, y, col)
+            return_value = check_connected(x - 1, y, x, y, col)
         else:
-            retval = False
+            return_value = False
 
-    if 0 <= x - 1 < 11 and 0 <= y + 1 < 11 and retval is False and (x - 1 != xpar or y + 1 != ypar):
+    if 0 <= x - 1 < 11 and 0 <= y + 1 < 11 and return_value is False and (x - 1 != x_parent or y + 1 != y_parent):
         if boardHelp[x - 1][y + 1] == col:
-            retval = check_connected(x - 1, y + 1, x, y, col)
+            return_value = check_connected(x - 1, y + 1, x, y, col)
         else:
-            retval = False
+            return_value = False
 
-    if 0 <= x + 1 < 11 and retval is False and x + 1 != xpar:
+    if 0 <= x + 1 < 11 and return_value is False and x + 1 != x_parent:
         if boardHelp[x + 1][y] == col:
-            retval = check_connected(x + 1, y, x, y, col)
+            return_value = check_connected(x + 1, y, x, y, col)
         else:
-            retval = False
+            return_value = False
 
-    if 0 <= x + 1 < 11 and 0 <= y - 1 < 11 and retval is False and (x + 1 != xpar or y - 1 != ypar):
+    if 0 <= x + 1 < 11 and 0 <= y - 1 < 11 and return_value is False and (x + 1 != x_parent or y - 1 != y_parent):
         if boardHelp[x + 1][y - 1] == col:
-            retval = check_connected(x + 1, y - 1, x, y, col)
+            return_value = check_connected(x + 1, y - 1, x, y, col)
         else:
-            retval = False
+            return_value = False
 
-    if 0 <= y - 1 < 11 and retval is False and ypar != y - 1:
+    if 0 <= y - 1 < 11 and return_value is False and y_parent != y - 1:
         if boardHelp[x][y - 1] == col:
-            retval = check_connected(x, y - 1, x, y, col)
+            return_value = check_connected(x, y - 1, x, y, col)
         else:
-            retval = False
+            return_value = False
 
-    if 0 <= y + 1 < 11 and ypar != y + 1 and retval is False:
+    if 0 <= y + 1 < 11 and y_parent != y + 1 and return_value is False:
         if boardHelp[x][y + 1] == col:
-            retval = check_connected(x, y + 1, x, y, col)
+            return_value = check_connected(x, y + 1, x, y, col)
         else:
-            retval = False
-    return retval
+            return_value = False
+    return return_value
 
 # This function drives the program and plays the game.
-# TODO: main function()
+# red() calls p1's move() and blue() calls p2's move().
+from p1 import move as red
+from p2 import move as blue
+
+
