@@ -1,3 +1,5 @@
+import p1,p2
+
 # Main.py -  main function of this project, all functions to be defined here.
 class DisjointSet:
     def __init__(self):
@@ -142,35 +144,19 @@ def print_root():
 
 # This function drives the program and plays the game.
 # TODO: main function()
-move(5, 5, 'R')
-move(9, 1, 'B')
-move(6, 3, 'R')
-move(8, 1, 'B')
-move(7, 1, 'R')
-move(7, 2, 'B')
-move(6, 2, 'R')
-move(7, 0, 'B')
-move(8, 0, 'R')
-move(6, 1, 'B')
-move(4, 7, 'R')
-move(5, 2, 'B')
-move(4, 8, 'R')
-move(4, 3, 'B')
-move(10, 3, 'R')
-move(3, 4, 'B')
-move(6, 4, 'R')
-move(2, 5, 'B')
-move(5, 6, 'R')
-move(1, 6, 'B')
-move(10, 0, 'R')
-move(0, 7, 'B')
-move(10, 4, 'R')
-move(10, 1, 'B')
-move(5, 8, 'R')
-move(4, 9, 'B')
-move(10, 2, 'R')
-move(3, 9, 'B')
-move(5, 9, 'R')
-move(2, 9, 'B')
-move(5, 10, 'R')
-print check_winning()
+def main():
+    global board
+    player = p1
+    color = 'R'
+    while not check_winning():
+        x,y = player.move([i[1:-1] for i in board[1:-1]]) # For giving 11X11 matrix
+        move(x,y,color)
+        # print_board() # to see current status of the board
+        if player == p1:
+            player = p2
+            color = 'B'
+        elif player == p2:
+            player = p1
+            color = 'R'
+    print check_winning()
+main()
