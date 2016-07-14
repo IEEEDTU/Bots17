@@ -120,7 +120,7 @@ def check_winning():
         return 'B'
     elif ds.find_set(13, 25):
         return 'R'
-    return 'N'
+    return None
 
 
 # function to print current status of ds.Arr
