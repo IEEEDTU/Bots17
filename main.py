@@ -146,17 +146,34 @@ def print_root():
 # TODO: main function()
 def main():
     global board
+    reverse = False # Var for storing swap rule implemented or not.
     player = p1
     color = 'R'
-    while not check_winning():
+    x, y = player.move([i[1:-1] for i in board[1:-1]]) # For giving 11X11 matrix
+    move(x,y,color)
+    
+    
+    player = p2
+    color = 'B'
+    x, y = player.move([i[1:-1] for i in board[1:-1]]) # For giving 11X11 matrix
+    
+    # player 2 will return x='.' and y='.' for swap of moves i.e. (x,y) = ('.','.')
+    if (x,y) == ('.','.'):
+        player = p1
         x,y = player.move([i[1:-1] for i in board[1:-1]]) # For giving 11X11 matrix
-        move(x,y,color)
+        reverse = True
+    move(x,y,color)
+    
+    while not check_winning():
         # print_board() # to see current status of the board
         if player == p1:
             player = p2
-            color = 'B'
+            color = 'B' if not reverse else 'R'
         elif player == p2:
             player = p1
-            color = 'R'
+            color = 'R' if not reverse else 'B'
+            
+        x,y = player.move([i[1:-1] for i in board[1:-1]]) # For giving 11X11 matrix
+        move(x,y,color)
     print check_winning()
 main()
