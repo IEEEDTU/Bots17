@@ -37,4 +37,4 @@ def func():
     move(5, 10, 'R')
 
 
-print(timeit.timeit(func, number=1000))
+func()
