@@ -15,5 +15,4 @@ def func():
     move(0, 10, 'B')
 
 
-print(timeit.timeit(func, number=1000))
-
+func()
