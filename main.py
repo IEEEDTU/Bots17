@@ -105,13 +105,24 @@ def check_winning():
         return 'R'
     return None
 
-
+def print_board():
+    # Only supported in python2 and not in python3
+    global board
+    space = 0
+    for i in board:
+        print space*' ',
+        for j in i:
+            print j,
+        space+=1
+        print
+        
 # This function drives the program and plays the game.
 def main():
     global board
     initialize_board()
 
     reverse = False  # Var for storing swap rule implemented or not.
+    
     player = p1
     color = 'R'
     x, y = player.move([i[1:-1] for i in board[1:-1]])  # For giving 11X11 matrix
@@ -129,7 +140,6 @@ def main():
     move(x, y, color)
 
     while not check_winning():
-        # print_board() # to see current status of the board
         if player == p1:
             player = p2
             color = 'B' if not reverse else 'R'
@@ -141,6 +151,5 @@ def main():
         move(x, y, color)
 
     print(check_winning())
-
 
 main()
