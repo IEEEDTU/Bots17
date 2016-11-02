@@ -3,9 +3,11 @@
 # board[i][j]: 'U' -> Unoccupied or empty slot, 'R' -> Red stone, 'B' -> Blue stone.
 # The function should return x, y as coordinates to place his new move.
 
-import random
+redmove = [(5, 5), (6, 3), (7, 1), (6, 2), (8, 0), (4, 7), (4, 8), (10, 3), (6, 4), (5, 6), (10, 0), (10, 4), (5, 8), (10, 2), (5, 9), (5, 10)]
+#redmove = [(i,j) for i in range(11) for j in range(11-i-1)]+[(10, 0)]
+indred = 0
+
 def move(board):
-    x,y = random.randint(0,10),random.randint(0,10)
-    while board[x][y] !='U':
-        x,y = random.randint(0,10),random.randint(0,10)
-    return x,y
+	global redmove,indred
+	indred+=1
+	return redmove[indred-1]
