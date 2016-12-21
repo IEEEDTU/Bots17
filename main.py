@@ -1,49 +1,12 @@
 import p1, p2
-
+import disjoint
 
 # Main.py -  main function of this project, all functions to be defined here.
-class DisjointSet:
-    def __init__(self):
-        self.Arr = []
-        self.Size = []
-
-    def initialize(self):
-        for i in range(169):
-            self.Arr.append(i)
-            self.Size.append(1)
-
-        for i in range(12):
-            self.Arr[1 + i], self.Arr[156 + i] = 1, 156  # Top and Bottom virtual cells.
-
-        for i in range(1, 12):
-            self.Arr[13 * i], self.Arr[13 * i + 12] = 13, 25  # Left and Right virtual cells.
-
-    def calc_id(self, x, y):
-        return x * 13 + y
-
-    def root(self, i):
-        if self.Arr[i] != i:
-            self.Arr[i] = self.root(self.Arr[i])
-        return self.Arr[i]
-
-    def merge(self, a, b):
-        root_a, root_b = self.root(a), self.root(b)
-        if root_a != root_b:
-            if self.Size[root_a] < self.Size[root_b]:
-                self.Arr[root_a], self.Size[root_b] = self.Arr[root_b], self.Size[root_b] + self.Size[root_a]
-            else:
-                self.Arr[root_b], self.Size[root_a] = self.Arr[root_a], self.Size[root_a] + self.Size[root_b]
-
-    def find_set(self, a, b):
-        return self.root(a) == self.root(b)
-
-
-ds = DisjointSet()
+ds = disjoint.DisjointSet()
 ds.initialize()
 
 # Board (13 * 13 matrix) initialized with 'U' --13x13 for virtual nodes
 board = [['U' for j in range(13)] for i in range(13)]
-
 
 # Function to fill in values for board
 def initialize_board():
@@ -54,6 +17,7 @@ def initialize_board():
     board[12][0:11] = ['B'] * 11
     board[0][0] = board[0][12] = board[12][0] = board[12][12] = 'O'  # virtual corners not required
 
+
 # This function checks whether a new piece can be placed or not.
 def is_valid_move(r, c):
     if 0 <= r < 11 and 0 <= c < 11 and board[r + 1][c + 1] == 'U':
@@ -61,10 +25,8 @@ def is_valid_move(r, c):
     else:
         return False
 
-
 rvals = [0, 1, 0, -1, -1, 1]
 cvals = [-1, -1, 1, 1, 0, 0]
-
 
 def check_in_range(x, y):
     if x < 0 or x > 12 or y < 0 or y > 12:
@@ -73,7 +35,7 @@ def check_in_range(x, y):
 
 
 def get_connected_components(x, y):
-    global board
+    global board, rvals, cvals
     ret, color = [], board[x][y]
     for k in range(6):
         a, b = x + cvals[k], y + rvals[k]
@@ -105,51 +67,71 @@ def check_winning():
         return 'R'
     return None
 
-def print_board():
-    # Only supported in python2 and not in python3
-    global board
-    space = 0
-    for i in board:
-        print space*' ',
-        for j in i:
-            print j,
-        space+=1
-        print
-        
+
+
 # This function drives the program and plays the game.
 def main():
     global board
     initialize_board()
 
     reverse = False  # Var for storing swap rule implemented or not.
-    
+
     player = p1
     color = 'R'
-    x, y = player.move([i[1:-1] for i in board[1:-1]])  # For giving 11X11 matrix
+    lang = lang1
+    x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
     move(x, y, color)
-
+    print(color, (x, y))
+    
     player = p2
     color = 'B'
-    x, y = player.move([i[1:-1] for i in board[1:-1]])  # For giving 11X11 matrix
+    lang = lang2
+    x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
 
     # player 2 will return x='.' and y='.' for swap of moves i.e. (x,y) = ('.','.')
     if (x, y) == ('.', '.'):
         player = p1
-        x, y = player.move([i[1:-1] for i in board[1:-1]])  # For giving 11X11 matrix
+        lang = lang1
+        x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
         reverse = True
     move(x, y, color)
+    print(color, (x, y))
 
     while not check_winning():
         if player == p1:
             player = p2
+            lang = lang2
             color = 'B' if not reverse else 'R'
         elif player == p2:
             player = p1
+            lang = lang1
             color = 'R' if not reverse else 'B'
 
-        x, y = player.move([i[1:-1] for i in board[1:-1]])  # For giving 11X11 matrix
+        x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
         move(x, y, color)
+        print(color, (x, y))
 
     print(check_winning())
+
+# This is for selecting language.
+langs = {
+        1: "C",
+        2: "C++",
+        3: "Java",
+        4: "Python2",
+        5: "Python3",
+}
+
+def print_menu():
+    for i in range(1, 6):
+        print("%d."%(i), langs[i]) 
+
+print_menu()
+lang1 = int(input("Select language for player 1(1-5): "))
+lang2 = int(input("Select language for player 2(1-5): "))
+
+print("You have selected the following: ")
+print("P1:", langs[lang1])
+print("P2:", langs[lang2])
 
 main()
