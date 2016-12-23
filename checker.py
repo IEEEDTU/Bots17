@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+import time
 
 codes = {200:'success',404:'file not found',400:'error',408:'timeout'}
 
@@ -151,16 +152,43 @@ def readOutput():
     file = open('out.txt', 'r')
     x, y = file.read().split(' ')
     file.close()
-    os.remove('in.txt')
-    os.remove('out.txt')
+    delete_temp()
     return x, y
+
+def delete_temp():
+    if os.path.isfile('in.txt'):
+        os.remove('in.txt')
+    if os.path.isfile('out.txt'):
+        os.remove('out.txt')
 
 def runCode(board, file, lang):
     writeBoard(board)
-    if sys.platform == 'win32':
-        compileWindows(file, lang)
-        runWindows(file, lang)
-    else:
-        compileUnix(file, lang)
-        runUnix(file, lang)
+
+    r = compileWindows(file, lang) if sys.platform == 'win32' else compileWindows(file, lang)
+    if r == 400:
+        print(codes[400])
+        delete_temp()
+        return 'x', 'x'
+
+    start = time.time()
+    r = runWindows(file, lang) if sys.platform == 'win32' else runWindows(file, lang)
+    t = time.time() - start
+
+    if r == 400:
+        print(codes[400])
+        delete_temp()
+        return 'x', 'x'
+    elif t > 5 and 1 <= lang <= 2:
+        print(codes[408])
+        delete_temp()
+        return 'x', 'x'
+    elif t > 10 and lang == 3:
+        print(codes[408])
+        delete_temp()
+        return 'x', 'x'
+    elif t > 15 and 4 <= lang <= 5:
+        print(codes[408])
+        delete_temp()
+        return 'x', 'x'
+    
     return readOutput()

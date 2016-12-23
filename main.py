@@ -80,6 +80,9 @@ def main():
     color = 'R'
     lang = lang1
     x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
+    if (x, y) == ('x', 'x'):
+        print(getplayer(reverse, color), " loses!")
+        return
     x, y = int(x), int(y)
     move(x, y, color)
     print(getplayer(reverse, color), color, (x, y))
@@ -88,14 +91,19 @@ def main():
     color = 'B'
     lang = lang2
     x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
-
+    if (x, y) == ('x', 'x'):
+        print(getplayer(reverse, color), " loses!")
+        return
     # player 2 will return x='.' and y='.' for swap of moves i.e. (x,y) = ('.','.')
-    if (x, y) == ('.', '.'):
+    elif (x, y) == ('.', '.'):
         player = p1
         lang = lang1
         x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
         reverse = True
     
+    if (x, y) == ('x', 'x'):
+        print(getplayer(reverse, color), " loses!")
+        return
     x, y = int(x), int(y)
     move(x, y, color)
     print(getplayer(reverse, color), color, (x, y))
@@ -111,11 +119,14 @@ def main():
             color = 'R' if not reverse else 'B'
 
         x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
+        if (x, y) == ('x', 'x'):
+            print(getplayer(reverse, color), " loses!")
+            return
         x, y = int(x), int(y)
         move(x, y, color)
         print(getplayer(reverse, color), color, (x, y))
 
-    print(getplayer(reverse, check_winning()))
+    print(getplayer(reverse, check_winning()), ' wins!')
 
 # This is for selecting language.
 langs = {
