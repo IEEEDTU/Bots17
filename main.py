@@ -67,7 +67,7 @@ def check_winning():
         return 'R'
     return None
 
-
+getplayer = lambda reverse, color : {'R':'P2','B':'P1'}[color] if reverse else {'R':'P1','B':'P2'}[color]
 
 # This function drives the program and plays the game.
 def main():
@@ -80,8 +80,9 @@ def main():
     color = 'R'
     lang = lang1
     x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
+    x, y = int(x), int(y)
     move(x, y, color)
-    print(color, (x, y))
+    print(getplayer(reverse, color), color, (x, y))
     
     player = p2
     color = 'B'
@@ -94,8 +95,10 @@ def main():
         lang = lang1
         x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
         reverse = True
+    
+    x, y = int(x), int(y)
     move(x, y, color)
-    print(color, (x, y))
+    print(getplayer(reverse, color), color, (x, y))
 
     while not check_winning():
         if player == p1:
@@ -108,10 +111,11 @@ def main():
             color = 'R' if not reverse else 'B'
 
         x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
+        x, y = int(x), int(y)
         move(x, y, color)
-        print(color, (x, y))
+        print(getplayer(reverse, color), color, (x, y))
 
-    print(check_winning())
+    print(getplayer(reverse, check_winning()))
 
 # This is for selecting language.
 langs = {

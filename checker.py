@@ -1,5 +1,6 @@
 import os
 import sys
+import subprocess
 
 codes = {200:'success',404:'file not found',400:'error',408:'timeout'}
 
@@ -70,22 +71,24 @@ def compileUnix(file, lang):
 
 def runWindows(file, lang):
     if lang == 1:
-        cmd = '.\\' + file[:-2]
+        cmd = '.\\' + file[:7] + '\\' + file[8:-2]
     elif lang == 2:
-        cmd = '.\\' + file[:-4]
+        cmd = '.\\' + file[:7] + '\\' + file[8:-4]
     elif lang == 3:
-        cmd = 'java ' + file[:-5]
+        cmd = 'java -cp ' + file[:8] + ' ' + file[8:-5]
 
     if 1 <= lang <= 3:
         r = os.system(cmd + ' < in.txt > out.txt')
 
+    FNULL = open(os.devnull, 'w')
     if 4 <= lang <= 5:
-        r = os.system('python ' + file + ' < in.txt > out.txt')
+        r = subprocess.call('python ' + file + ' < in.txt > out.txt', shell=True, stdout=FNULL, stderr=FNULL)
         if r != 0:
-            r = os.system('python3 ' + file + ' < in.txt > out.txt')
+            r = subprocess.call('python3 ' + file + ' < in.txt > out.txt', shell=True, stdout=FNULL, stderr=FNULL)
         if r != 0:
-            r = os.system('py ' + file + ' < in.txt > out.txt')
+            r = subprocess.call('py ' + file + ' < in.txt > out.txt', shell=True, stdout=FNULL, stderr=FNULL)
 
+    class_file = ""
     if lang == 1:  # C
         class_file = file[:-2] + ".exe"
     elif lang == 2:  # C++
@@ -111,18 +114,20 @@ def runUnix(file, lang):
     elif lang == 2:
         cmd = './' + file[:-4]
     elif lang == 3:
-        cmd = 'java ' + file[:-5]
+        cmd = 'java -cp ' + file[:8] + ' ' + file[8:-5]
 
     if 1 <= lang <= 3:
         r = os.system(cmd + ' < in.txt > out.txt')
 
+    FNULL = open(os.devnull, 'w')
     if 4 <= lang <= 5:
-        r = os.system('python ' + file + ' < in.txt > out.txt')
+        r = subprocess.call('python ' + file + ' < in.txt > out.txt', shell=True, stdout=FNULL, stderr=FNULL)
         if r != 0:
-            r = os.system('python3 ' + file + ' < in.txt > out.txt')
+            r = subprocess.call('python3 ' + file + ' < in.txt > out.txt', shell=True, stdout=FNULL, stderr=FNULL)
         if r != 0:
-            r = os.system('py ' + file + ' < in.txt > out.txt')
+            r = subprocess.call('py ' + file + ' < in.txt > out.txt', shell=True, stdout=FNULL, stderr=FNULL)
 
+    class_file = ""        
     if lang == 1:  # C
         class_file = file[:-2]
     elif lang == 2:  # C++
@@ -143,7 +148,7 @@ def runUnix(file, lang):
         return 400
 
 def readOutput():
-    file.open('out.txt', 'r')
+    file = open('out.txt', 'r')
     x, y = file.read().split(' ')
     file.close()
     os.remove('in.txt')
