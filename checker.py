@@ -3,8 +3,6 @@ import sys
 import subprocess
 import time
 
-codes = {200:'success',404:'file not found',400:'error',408:'timeout'}
-
 def writeBoard(board):
     file = open('in.txt', 'w')
     for i in range(len(board)):
@@ -166,7 +164,11 @@ def runCode(board, file, lang):
 
     r = compileWindows(file, lang) if sys.platform == 'win32' else compileWindows(file, lang)
     if r == 400:
-        print(codes[400])
+        print('Compilation Failed: Compilation Error')
+        delete_temp()
+        return 'x', 'x'
+    elif r == 404:
+        print('Compilation Failed: File Not Found')
         delete_temp()
         return 'x', 'x'
 
@@ -175,20 +177,29 @@ def runCode(board, file, lang):
     t = time.time() - start
 
     if r == 400:
-        print(codes[400])
+        print('Execution Failed: Runtime Error')
+        delete_temp()
+        return 'x', 'x'
+    elif r == 404:
+        print('Execution Failed: File Not Found')
         delete_temp()
         return 'x', 'x'
     elif t > 5 and 1 <= lang <= 2:
-        print(codes[408])
+        print('Time Limit Exceeded')
         delete_temp()
         return 'x', 'x'
     elif t > 10 and lang == 3:
-        print(codes[408])
+        print('Time Limit Exceeded')
         delete_temp()
         return 'x', 'x'
     elif t > 15 and 4 <= lang <= 5:
-        print(codes[408])
+        print('Time Limit Exceeded')
         delete_temp()
         return 'x', 'x'
     
-    return readOutput()
+    x, y = readOutput()
+    if not x[:1].isdigit() or not y[:1].isdigit():
+        print('Invalid output')
+        return 'x', 'x'
+    else:
+        return x, y
