@@ -7,5 +7,6 @@ def move(board):
      return x, y
 
 board = [input().split() for i in range(11)]
+color = input()
 x, y = move(board)
 print(x, y)

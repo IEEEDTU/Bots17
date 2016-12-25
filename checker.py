@@ -3,13 +3,15 @@ import sys
 import subprocess
 import time
 
-def writeBoard(board):
+def writeBoard(board, color):
     file = open('in.txt', 'w')
     for i in range(len(board)):
         for j in range(len(board[i])):
             file.write(str(board[i][j]))
             file.write(' ')
         file.write('\n')
+    file.write('\b')
+    file.write(color)
     file.close()
 
 def compileWindows(file, lang):
@@ -158,11 +160,11 @@ def delete_classfiles(file, lang):
         os.remove(class_file)
 
 
-def runCode(board, file, lang, isFirstMove):
-    writeBoard(board)
+def runCode(board, color, file, lang, isFirstMove):
+    writeBoard(board, color)
 
     if isFirstMove:
-        r = compileWindows(file, lang) if sys.platform == 'win32' else compileWindows(file, lang)
+        r = compileWindows(file, lang) if sys.platform == 'win32' else compileUnix(file, lang)
         if r == 400:
             print('Compilation Failed: Compilation Error')
             delete_temp()
@@ -173,7 +175,7 @@ def runCode(board, file, lang, isFirstMove):
             return 'x', 'x'
 
     start = time.time()
-    r = runWindows(file, lang) if sys.platform == 'win32' else runWindows(file, lang)
+    r = runWindows(file, lang) if sys.platform == 'win32' else runUnix(file, lang)
     t = time.time() - start
 
     if r == 400:

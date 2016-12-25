@@ -9,7 +9,7 @@ file = {
 }
 
 def move(board, lang, isFirstMove):
-    return checker.runCode(board, file[lang], lang, isFirstMove)
+    return checker.runCode(board, 'R', file[lang], lang, isFirstMove)
 
 def delete_classfiles(lang):
     checker.delete_classfiles(file[lang], lang)

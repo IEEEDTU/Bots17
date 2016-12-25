@@ -3,14 +3,14 @@
 #include <time.h>
 
 int main() {	
-	char board[11][11];
+	char board[11][11], color;
 	int i = 0, j = 0;
 	for(i = 0; i < 11; i++) {
 		for(j = 0; j < 11; j++) {
 			scanf("%s", &(board[i][j]));
 		}
 	}
-	
+	scanf("%c", &color);
 	int x, y;
 
 	// Edit following code with your code.

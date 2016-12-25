@@ -26,11 +26,13 @@ vector<int> play(vector<vector<char > > board)
 int main() 
 {	
 	vector<vector<char> > board(11, vector<char>(11));
+	char color;
 	for (int i = 0; i < 11; i++) {
 		for (int j = 0; j < 11; j++) {
 			cin >> board[i][j];
 		}
 	}
+	cin >> color;
 	
 	vector<int> xy = play(board);
 	cout << xy[0] << ' ' << xy[1];
