@@ -87,17 +87,6 @@ def runWindows(file, lang):
         if r != 0:
             r = subprocess.call('py ' + file + ' < in.txt > out.txt', shell=True, stdout=FNULL, stderr=FNULL)
 
-    class_file = ""
-    if lang == 1:  # C
-        class_file = file[:-2] + ".exe"
-    elif lang == 2:  # C++
-        class_file = file[:-4] + ".exe"
-    elif lang == 3:  # Java
-        class_file = file[:-4] + "class"
-
-    if (os.path.isfile(class_file)):
-        os.remove(class_file)
-
     if r==0:
         return 200
     elif r==31744:
@@ -126,17 +115,6 @@ def runUnix(file, lang):
         if r != 0:
             r = subprocess.call('py ' + file + ' < in.txt > out.txt', shell=True, stdout=FNULL, stderr=FNULL)
 
-    class_file = ""        
-    if lang == 1:  # C
-        class_file = file[:-2]
-    elif lang == 2:  # C++
-        class_file = file[:-4]
-    elif lang == 3:  # Java
-        class_file = file[:-4] + "class"
-
-    if (os.path.isfile(class_file)):
-        os.remove(class_file)
-
     if r==0:
         return 200
     elif r==31744:
@@ -159,18 +137,40 @@ def delete_temp():
     if os.path.isfile('out.txt'):
         os.remove('out.txt')
 
-def runCode(board, file, lang):
+def delete_classfiles(file, lang):
+    class_file = ""
+    if sys.platform == 'win32':
+        if lang == 1:  # C
+            class_file = file[:-2] + ".exe"
+        elif lang == 2:  # C++
+            class_file = file[:-4] + ".exe"
+        elif lang == 3:  # Java
+            class_file = file[:-4] + "class"
+    else:   
+        if lang == 1:  # C
+            class_file = file[:-2]
+        elif lang == 2:  # C++
+            class_file = file[:-4]
+        elif lang == 3:  # Java
+            class_file = file[:-4] + "class"
+
+    if (os.path.isfile(class_file)):
+        os.remove(class_file)
+
+
+def runCode(board, file, lang, isFirstMove):
     writeBoard(board)
 
-    r = compileWindows(file, lang) if sys.platform == 'win32' else compileWindows(file, lang)
-    if r == 400:
-        print('Compilation Failed: Compilation Error')
-        delete_temp()
-        return 'x', 'x'
-    elif r == 404:
-        print('Compilation Failed: File Not Found')
-        delete_temp()
-        return 'x', 'x'
+    if isFirstMove:
+        r = compileWindows(file, lang) if sys.platform == 'win32' else compileWindows(file, lang)
+        if r == 400:
+            print('Compilation Failed: Compilation Error')
+            delete_temp()
+            return 'x', 'x'
+        elif r == 404:
+            print('Compilation Failed: File Not Found')
+            delete_temp()
+            return 'x', 'x'
 
     start = time.time()
     r = runWindows(file, lang) if sys.platform == 'win32' else runWindows(file, lang)

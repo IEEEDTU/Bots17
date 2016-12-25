@@ -74,7 +74,7 @@ def main():
 
     # P1's first turn.
     player, color, lang = p1, 'R', lang1
-    x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
+    x, y = player.move([i[1:-1] for i in board[1:-1]], lang, True)  # For giving 11X11 matrix
     if (x, y) == ('x', 'x'):
         print(get_other(color), "wins!")
         return
@@ -89,7 +89,7 @@ def main():
 
     # P2's first turn
     player, color, lang = p2, 'B', lang2
-    x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
+    x, y = player.move([i[1:-1] for i in board[1:-1]], lang, True)  # For giving 11X11 matrix
     if (x, y) == ('x', 'x'):
         print(get_other(color), "wins!")
         return
@@ -110,8 +110,7 @@ def main():
     # Normal gameplay
     while not check_winning():
         player, color, lang = (p2, 'B', lang2) if (player == p1) else (p1, 'R', lang1)
-
-        x, y = player.move([i[1:-1] for i in board[1:-1]], lang)  # For giving 11X11 matrix
+        x, y = player.move([i[1:-1] for i in board[1:-1]], lang, False)  # For giving 11X11 matrix
         if (x, y) == ('x', 'x'):
             print(get_other(color), "wins!")
             return
@@ -149,5 +148,7 @@ if 1 <= lang1 <= 5 and 1 <= lang2 <= 5:
     print("P1:", langs[lang1])
     print("P2:", langs[lang2])
     main()
+    p1.delete_classfiles(lang1)
+    p2.delete_classfiles(lang2)
 else:
     print("Invalid language selection.")
