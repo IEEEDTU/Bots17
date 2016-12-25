@@ -67,15 +67,16 @@ bots17
 │   ├── play.cpp
 │   ├── Play.java
 │   ├── play_py2.py
-│   ├── play_py3.py
+│   └── play_py3.py
 ├── player2/
 │   ├── play.c
 │   ├── play.cpp
 │   ├── Play.java
 │   ├── play_py2.py
-│   ├── play_py3.py
+│   └── play_py3.py
 ├── checker.py
-├── main.py 
+├── disjoint.py
+├── main.py
 ├── p1.py
 └── p2.py
 ```
