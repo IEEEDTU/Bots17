@@ -108,7 +108,7 @@ The program will print every move and the winner in the last.
 ---
 The Player1 is allocated RED color and the Player2 is allocated BLUE color. Players take turns placing a stone of their color on a single cell within the overall playing board. The goal is to form a connected path of your stones linking the opposing sides of the board marked by your colors, before your opponent connects his or her sides in a similar fashion. The first player to complete his or her connection wins the game. The four corners each belong to both adjacent sides. 
 
-We will play it on an 11x11 grid simulated as rhombus. The top left of the grid is [0, 0] and the bottom right is [10, 10]. The cell **board[i, j]** represent cell in ith row from the top and jth column from the left and it is connected to any of top, left, right, or bottom cell. It is also connected to two of the diagonal cells - **board[i+1, j+1]** and **board[i-1, j-1]**, but not connected with the other two diagonal cells. View example image.
+We will play it on an 11x11 grid simulated as rhombus. The top left of the grid is [0, 0] and the bottom right is [10, 10]. The cell **board[i, j]** represent cell in ith row from the top and jth column from the left and it is connected to any of top, left, right, or bottom cell. It is also connected to two of the diagonal cells - **board[i-1, j+1]** and **board[i+1, j-1]**, but not connected with the other two diagonal cells. View example image.
 
 ![Image of hex](hex.jpg)
 
