@@ -2,7 +2,7 @@
 
 Theme: [Hex - Board Game](https://en.wikipedia.org/wiki/Hex_(board_game))
 
-Read the [Problem Statement](https://goo.gl/uOz2ej)
+Read the [Problem Statement](https://drive.google.com/file/d/1DSMGlFM_FAeDv0FyIXplBpQM_AcDm6dM/view)
 
 ---
 The central code of the project is written in Python3.
