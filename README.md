@@ -20,6 +20,7 @@ The players codes can be written in any one of the following languages.
 ### Installing Python3
 
 1. Download and install latest version of Python 3 on your computer. Visit [python.org](https://python.org) for download and installation instructions.
+
 2. Make sure Python3 is correctly installed and is added to the System PATH variables. To check this, open command prompt/terminal, and run command `python` to see if it opens a python shell displaying version of installed python, similar to this:
 
     ```
