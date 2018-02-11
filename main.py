@@ -69,9 +69,10 @@ get_other = lambda color : {'R':'P2', 'B':'P1'}[color]
 
 # This function drives the program and plays the game.
 def main():
-    global board
     initialize_board()
 
+    swapped = False
+    
     # P1's first turn.
     player, color, lang = p1, 'R', lang1
     x, y = player.move([i[1:-1] for i in board[1:-1]], lang, True)  # For giving 11X11 matrix
@@ -103,9 +104,16 @@ def main():
         move(x, y, color)
         print(get_player(color), color, (x, y))
     else:  # player 2 will return coordinates of red stone to swap i.e. board[x][y] == 'R'
-        board[x][y] = 'U'
-        move(x, y, color)
-        print(get_player(color), color, (x, y), 'Swap!')
+        if swapped == False:
+            board[x+1][y+1] = 'U'
+            move(x, y, color)
+            print(get_player(color), color, (x, y), 'Swap!')
+            swapped = True
+        else:
+            print('Already Swapped Once!')
+            print("Invalid move")
+            print(get_other(color), "wins!")
+            return
 
     # Normal gameplay
     while not check_winning():
@@ -115,6 +123,12 @@ def main():
             print(get_other(color), "wins!")
             return
         x, y = int(x), int(y)
+        if player == p2 and board[x+1][y+1]=='R':
+            print("Already Swapped Once!")
+            print("Invalid move")
+            print(get_player(color),color, (x,y))
+            print(get_other(color), "wins!")
+            return
         if not is_valid_move(x, y):
             print("Invalid move")
             print(get_other(color), "wins!")
