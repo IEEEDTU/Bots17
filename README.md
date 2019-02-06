@@ -1,4 +1,4 @@
-# Bots - Troika 2018
+# Bots - Troika 2019
 
 Theme: [Hex - Board Game](https://en.wikipedia.org/wiki/Hex_(board_game))
 
